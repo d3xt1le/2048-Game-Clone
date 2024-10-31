@@ -1,8 +1,9 @@
-// TODO: Set reset, start buttons
+// TODO: Set reset button
 // TODO: Update GUI
 // TODO: Create logic for player losing
 // TODO: Create logic for player winning
 // TODO: Create continue logic for player reaching 2048 tile
+// TODO: Create logic for tile sliding animations
 
 let board;
 let score = 0;
@@ -94,6 +95,9 @@ function updateTile(tile, num) {
         } else { // set base class for any # > 4096
             tile.classList.add("x8192");
         }
+    }
+    else {
+        tile.classList.add("empty-tile");
     }
 }
 

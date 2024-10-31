@@ -35,31 +35,12 @@ hr {
     align-items: center;
 }
 
-/* #board {
-    width: 400px;
-    height: 400px;
-
-    background-color: #cdc1b5;
-    border: 6px solid #bbada0;
-
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.tile {
-    width: 90px;
-    height: 90px;
-    border: 5px solid #bbada0;
-
-    font-size: 40px;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
 
 /* Color of tiles */
+.empty-tile {
+    background-color: #bbada0;
+}
+
 .x2 {
     background-color: #eee4da;
     color: #727371;
