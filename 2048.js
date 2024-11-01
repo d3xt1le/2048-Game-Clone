@@ -4,12 +4,15 @@
 // TODO: Create logic for player winning
 // TODO: Create continue logic for player reaching 2048 tile
 // TODO: Create logic for tile sliding animations
+// TODO: Create logic for tile merging animations
 
+/* Global Variables */
 let board;
 let score = 0;
 let rows = 4;
 let columns = 4;
 
+/* Load initial board on page load */
 window.onload = function () {
     setGame();
 }
@@ -46,7 +49,7 @@ function setGame() {
     setTwo();
 }
 
-
+/* Function to check for an empty tile */
 function hasEmptyTile() {
     for (let rowIdx = 0; rowIdx < rows; rowIdx++) {
         for (let colIdx = 0; colIdx < columns; colIdx++) {
@@ -58,6 +61,7 @@ function hasEmptyTile() {
     return false;
 }
 
+/* Function to randomly set 2 initial tiles on the board */
 function setTwo() {
     if (!hasEmptyTile()) {
         return;
@@ -102,7 +106,11 @@ function updateTile(tile, num) {
 }
 
 
-/* Event to slide tiles around and add their contents */
+/* 
+***********************************
+*    Key Press Event Listener     *
+***********************************
+*/
 document.addEventListener("keyup", (event) => {
     if (event.code === "ArrowLeft") {
         slideLeft();
@@ -124,7 +132,13 @@ document.addEventListener("keyup", (event) => {
     document.getElementById("score").innerText = score;
 })
 
-/* Sliding helper functions */
+
+
+/* 
+***********************************
+*     Sliding Helper Functions    *
+***********************************
+*/
 function filterZero(row) {
     // return array without zeroes
     return row.filter(num => num != 0);
@@ -155,6 +169,13 @@ function slide(row) {
     return row;
 }
 
+
+
+/* 
+***********************************
+*    Direction Slide Functions    *
+***********************************
+*/
 function slideLeft() {
     // loop through rows
     for (let rowIdx = 0; rowIdx < rows; rowIdx++) {
@@ -170,6 +191,7 @@ function slideLeft() {
         }
     }
 }
+
 function slideRight() {
     // loop through rows
     for (let rowIdx = 0; rowIdx < rows; rowIdx++) {
