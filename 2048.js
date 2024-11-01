@@ -17,6 +17,18 @@ window.onload = function () {
     setGame();
 }
 
+/* Reset game when button is pressed */
+function resetGame() {
+    clearBoard();
+    setGame();
+}
+
+/* Clear previous board state*/
+function clearBoard() {
+    const board = document.getElementById("board");
+    board.innerHTML = "";
+}
+
 /* Function to set initial state of game */
 function setGame() {
     // initial board state

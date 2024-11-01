@@ -7,6 +7,7 @@ hr {
     width: 500px;
 }
 
+/* Game Board*/
 #board {
     width: 500px;
     height: 500px;
@@ -20,6 +21,10 @@ hr {
     flex-wrap: wrap;
 }
 
+/* Reset Button */
+#reset {}
+
+/* Tile Description */
 .tile {
     width: calc(25% - 11px);
     height: calc(25% - 11px);
