@@ -1,4 +1,4 @@
-// TODO: Set reset button
+// TODO: Beautify reset button
 // TODO: Update GUI
 // TODO: Create logic for player losing
 // TODO: Create logic for player winning
