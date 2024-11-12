@@ -23,6 +23,33 @@ function resetGame() {
     setGame();
 }
 
+/* Function to check for game end */
+function checkGameOver() {
+    // check for any empty tile
+    if (hasEmptyTile()) {
+        return false; // game not over
+    }
+
+    // check for adjacent tiles with matching numbers
+    for (let rowIdx = 0; rowIdx < rows; rowIdx++) {
+        for (let colIdx = 0; colIdx < columns; colIdx++) {
+            let currentTile = board[rowIdx][colIdx];
+
+            // check right
+            if (colIdx < columns - 1 && currentTile == board[rowIdx][colIdx + 1]) {
+                return false; // Found tile to merge right
+            }
+
+            // check down
+            if (rowIdx < rows - 1 && currentTile == board[rowIdx + 1][colIdx]) {
+                return false; // Found tile to merge down
+            }
+        }
+    }
+    // no empty tiles and valid adjacent tiles found, game over
+    return true;
+}
+
 /* Clear previous board state*/
 function clearBoard() {
     const board = document.getElementById("board");
@@ -124,24 +151,37 @@ function updateTile(tile, num) {
 ***********************************
 */
 document.addEventListener("keyup", (event) => {
+    let moved = false;
+
     if (event.code === "ArrowLeft") {
         slideLeft();
-        setTwo();
+        moved = true;
     }
     else if (event.code === "ArrowRight") {
         slideRight();
-        setTwo();
+        moved = true;
     }
     else if (event.code === "ArrowUp") {
         slideUp();
-        setTwo();
+        moved = true;
     }
     else if (event.code === "ArrowDown") {
         slideDown();
-        setTwo();
+        moved = true;
     }
-    // update score
-    document.getElementById("score").innerText = score;
+
+    if (moved) {
+        setTwo(); // Add new tile
+        document.getElementById("score").innerText = score; // update score
+
+        // check for game over
+        if (checkGameOver()) {
+            // display alert after final move renders
+            setTimeout(() => {
+                alert("Game Over! No more valid moves left. Your final score is " + score);
+            }, 0);
+        }
+    }
 })
 
 
