@@ -50,6 +50,30 @@ function checkGameOver() {
     return true;
 }
 
+/* Function to show Game Over Modal */
+function showGameOverModal() {
+    // Modal elements
+    const modal = document.getElementById("gameOverModal");
+    const finalScore = document.getElementById("finalScore");
+    const restartButton = document.getElementById("restartButton");
+
+    // Update final score text
+    finalScore.innerText = score;
+
+    // Show the modal
+    modal.style.display = "block";
+
+    // Restart button handlet
+    restartButton.onclick = () => {
+        // hide modal
+        modal.style.display = "none";
+
+        // reset game
+        resetGame();
+    }
+}
+
+
 /* Clear previous board state*/
 function clearBoard() {
     const board = document.getElementById("board");
@@ -178,7 +202,7 @@ document.addEventListener("keyup", (event) => {
         if (checkGameOver()) {
             // display alert after final move renders
             setTimeout(() => {
-                alert("Game Over! No more valid moves left. Your final score is " + score);
+                showGameOverModal();
             }, 0);
         }
     }
