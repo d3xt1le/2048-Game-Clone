@@ -1,8 +1,4 @@
-// TODO: Beautify reset button
-// TODO: Update GUI
-// TODO: Create logic for player losing
-// TODO: Create logic for player winning
-// TODO: Create continue logic for player reaching 2048 tile
+// TODO: Update GUI for everything
 // TODO: Create logic for tile sliding animations
 // TODO: Create logic for tile merging animations
 
@@ -11,6 +7,7 @@ let board;
 let score = 0;
 let rows = 4;
 let columns = 4;
+let userChoseToContinue = false;
 
 /* Load initial board on page load */
 window.onload = function () {
@@ -21,6 +18,18 @@ window.onload = function () {
 function resetGame() {
     clearBoard();
     setGame();
+}
+
+/* Function to check for tile 2048 reached */
+function checkGameWon() {
+    for (let rowIdx = 0; rowIdx < rows; rowIdx++) {
+        for (let colIdx = 0; colIdx < columns; colIdx++) {
+            if (board[rowIdx][colIdx] === 2048) {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 /* Function to check for game end */
@@ -50,6 +59,42 @@ function checkGameOver() {
     return true;
 }
 
+/* Function to show Game Won Modal */
+function showGameWinModal() {
+    // Modal elements
+    const modal = document.getElementById("gameWonModal");
+    const finalScore = document.getElementById("finalScore");
+    const restartButton = document.getElementById("restartButton");
+    const continueButton = document.getElementById("continueButton");
+
+    // Update final score text
+    finalScore.innerText = `Final Score: ${score}`;
+
+    // Show the modal
+    modal.style.display = "block";
+
+    // Restart button handler
+    restartButton.onclick = () => {
+        // Hide modal
+        modal.style.display = "none";
+
+        // Reset game
+        resetGame();
+
+        // Reset continue flag for new game
+        userChoseToContinue = false;
+    }
+
+    // Continue button handler
+    continueButton.onclick = () => {
+        // Hide modal
+        modal.style.display = "none";
+
+        // User chose to continue
+        userChoseToContinue = true;
+    }
+}
+
 /* Function to show Game Over Modal */
 function showGameOverModal() {
     // Modal elements
@@ -58,12 +103,12 @@ function showGameOverModal() {
     const restartButton = document.getElementById("restartButton");
 
     // Update final score text
-    finalScore.innerText = score;
+    finalScore.innerText = `Final Score: ${score}`;
 
     // Show the modal
     modal.style.display = "block";
 
-    // Restart button handlet
+    // Restart button handler
     restartButton.onclick = () => {
         // hide modal
         modal.style.display = "none";
@@ -89,6 +134,7 @@ function setGame() {
         [0, 0, 0, 0],
         [0, 0, 0, 0]
     ];
+
 
     // loop through board
     for (let rowIdx = 0; rowIdx < rows; rowIdx++) {
@@ -175,36 +221,45 @@ function updateTile(tile, num) {
 ***********************************
 */
 document.addEventListener("keyup", (event) => {
-    let moved = false;
+    let tilesMoved = false;
 
     if (event.code === "ArrowLeft") {
         slideLeft();
-        moved = true;
+        tilesMoved = true;
     }
     else if (event.code === "ArrowRight") {
         slideRight();
-        moved = true;
+        tilesMoved = true;
     }
     else if (event.code === "ArrowUp") {
         slideUp();
-        moved = true;
+        tilesMoved = true;
     }
     else if (event.code === "ArrowDown") {
         slideDown();
-        moved = true;
+        tilesMoved = true;
     }
 
-    if (moved) {
+    // Check for possible movements
+    if (tilesMoved) {
         setTwo(); // Add new tile
         document.getElementById("score").innerText = score; // update score
 
         // check for game over
         if (checkGameOver()) {
-            // display alert after final move renders
+            // display modal after final move renders
             setTimeout(() => {
                 showGameOverModal();
             }, 0);
         }
+    }
+
+    // check for tile 2048 reached
+    if (checkGameWon() && !userChoseToContinue) {
+        // display modal after final move renders
+        setTimeout(() => {
+            showGameWinModal();
+        }, 0);
     }
 })
 
